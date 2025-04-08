@@ -20,7 +20,7 @@ jobs:
       - name: Set up WSL with Ubuntu
         uses: Vampire/setup-wsl@v3
         with:
-          distribution: Ubuntu
+          distribution: Ubuntu-24.04 
           additional-packages: "curl gnupg2 openjdk-11-jdk apt-transport-https lsb-release"
 
       - name: Install Apache Cassandra in WSL
