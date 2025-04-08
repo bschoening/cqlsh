@@ -2,9 +2,9 @@ name: CI - cqlsh with Apache Cassandra on Windows + WSL
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   cqlsh-tests:
