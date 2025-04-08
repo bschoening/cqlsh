@@ -24,7 +24,7 @@ jobs:
           additional-packages: "curl gnupg2 openjdk-11-jdk apt-transport-https lsb-release"
 
       - name: Install Apache Cassandra in WSL
-        shell: wsl-bash
+        shell: wsl-bash {0}
         run: |
           curl https://downloads.apache.org/cassandra/KEYS | gpg --dearmor | sudo tee /usr/share/keyrings/cassandra-archive-keyring.gpg > /dev/null
           echo "deb [signed-by=/usr/share/keyrings/cassandra-archive-keyring.gpg] https://downloads.apache.org/cassandra/debian 40x main" | sudo tee /etc/apt/sources.list.d/cassandra.sources.list
@@ -32,7 +32,7 @@ jobs:
           sudo apt-get install -y cassandra
 
       - name: Start Cassandra and wait for readiness
-        shell: wsl-bash
+        shell: wsl-bash {0}
         run: |
           sudo service cassandra start
           echo "Waiting for Cassandra to become available..."
