@@ -1,0 +1,61 @@
+name: CI - cqlsh with Apache Cassandra on Windows + WSL
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  cqlsh-tests:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout jeffwidman/cqlsh
+        uses: actions/checkout@v3
+        with:
+          repository: jeffwidman/cqlsh
+          path: cqlsh
+
+      - name: Set up WSL Ubuntu and install Cassandra
+        run: |
+          wsl --install -d Ubuntu || echo "Ubuntu already installed"
+          wsl sudo apt-get update
+          wsl sudo apt-get install -y gnupg2 curl openjdk-11-jdk lsb-release apt-transport-https
+
+          wsl curl https://downloads.apache.org/cassandra/KEYS | gpg --dearmor | sudo tee /usr/share/keyrings/cassandra-archive-keyring.gpg > /dev/null
+          wsl bash -c 'echo "deb [signed-by=/usr/share/keyrings/cassandra-archive-keyring.gpg] https://downloads.apache.org/cassandra/debian 40x main" | sudo tee /etc/apt/sources.list.d/cassandra.sources.list'
+
+          wsl sudo apt-get update
+          wsl sudo apt-get install -y cassandra
+
+      - name: Start Cassandra and wait until ready
+        run: |
+          wsl sudo service cassandra start
+          echo "Waiting for Cassandra to become available..."
+          wsl bash -c 'for i in {1..30}; do nodetool status | grep "UN" && break || sleep 2; done'
+
+      - name: Set up Python on Windows
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ./cqlsh
+          pip install pytest cassandra-driver
+
+      - name: Download Apache Cassandra CQLSH tests
+        run: |
+          mkdir -p apache_tests/cqlshlib/test
+          curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/__init__.py -o apache_tests/cqlshlib/test/__init__.py
+          curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/test_cqlsh_output.py -o apache_tests/cqlshlib/test/test_cqlsh_output.py
+          curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/test_cqlsh_parsing.py -o apache_tests/cqlshlib/test/test_cqlsh_parsing.py
+          curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/test_cqlsh_completion.py -o apache_tests/cqlshlib/test/test_cqlsh_completion.py
+          curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/test_keyspace_metadata.py -o apache_tests/cqlshlib/test/test_keyspace_metadata.py
+
+      - name: Run pytest on downloaded tests
+        run: |
+          pytest apache_tests/cqlshlib/test
+
