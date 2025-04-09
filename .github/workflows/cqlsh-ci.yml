@@ -26,6 +26,11 @@ jobs:
       - name: Install Apache Cassandra in WSL
         shell: wsl-bash {0}
         run: |
+
+          curl -o /etc/apt/keyrings/apache-cassandra.asc https://downloads.apache.org/cassandra/KEYS
+          echo "deb [signed-by=/etc/apt/keyrings/apache-cassandra.asc] https://debian.cassandra.apache.org 41x main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
+
+
           echo "Updating package lists..."
           sudo apt-get update
 
