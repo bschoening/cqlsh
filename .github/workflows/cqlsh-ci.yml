@@ -61,19 +61,20 @@ jobs:
 
       - name: Download Apache Cassandra CQLSH test files
         run: |
-          mkdir -p apache_tests/cqlshlib/test
-          curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/__init__.py -o apache_tests/cqlshlib/test/__init__.py
-          curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/test_cqlsh_output.py -o apache_tests/cqlshlib/test/test_cqlsh_output.py
-          curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/test_cqlsh_parsing.py -o apache_tests/cqlshlib/test/test_cqlsh_parsing.py
-          curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/test_cqlsh_completion.py -o apache_tests/cqlshlib/test/test_cqlsh_completion.py
-          curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/test_keyspace_metadata.py -o apache_tests/cqlshlib/test/test_keyspace_metadata.py
+          mkdir -p cqlshlib/test
+          curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/__init__.py -o cqlshlib/test/__init__.py
+          curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/test_cqlsh_output.py -o cqlshlib/test/test_cqlsh_output.py
+          curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/test_cqlsh_parsing.py -o cqlshlib/test/test_cqlsh_parsing.py
+          curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/test_cqlsh_completion.py -o cqlshlib/test/test_cqlsh_completion.py
+          curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/test_keyspace_metadata.py -o cqlshlib/test/test_keyspace_metadata.py
 
       - name: Run pytest on CQLSH tests
         run: |
           # pytest apache_tests/cqlshlib/test
           # cd apache_tests; pytest cqlshlib/test
           pwd
-          echo *
-          echo */*
-          cd apache_tests/cqlshlib; pwd; pytest test
+          ls *
+          ls */*
+          #cd apache_tests/cqlshlib; pwd; pytest test
+          pytest cqlshlib/test
 
