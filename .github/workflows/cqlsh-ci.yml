@@ -72,5 +72,8 @@ jobs:
         run: |
           # pytest apache_tests/cqlshlib/test
           # cd apache_tests; pytest cqlshlib/test
+          pwd
+          echo *
+          echo */*
           cd apache_tests/cqlshlib; pwd; pytest test
 
