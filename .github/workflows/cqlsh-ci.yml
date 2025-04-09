@@ -63,18 +63,19 @@ jobs:
         run: |
           mkdir -p cqlshlib/test
           curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/__init__.py -o cqlshlib/test/__init__.py
-          curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/test_cqlsh_output.py -o cqlshlib/test/test_cqlsh_output.py
+          curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/ansi_colors.py -o cqlshlib/test/ansi_colors.py
+          curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/basecase.py -o cqlshlib/test/basecase.py
+          curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/cassconnect.py -o cqlshlib/test/cassconnect.py
+          curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/run_cqlsh.py -o cqlshlib/test/run_cqlsh.py
           curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/test_cqlsh_parsing.py -o cqlshlib/test/test_cqlsh_parsing.py
           curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/test_cqlsh_completion.py -o cqlshlib/test/test_cqlsh_completion.py
+          curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/test_cqlsh_output.py -o cqlshlib/test/test_cqlsh_output.py
+          curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/test_keyspace_init.cql -o cqlshlib/test/test_keyspace_init.cql
+          curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/test_unicode.py -o cqlshlib/test/test_unicode.py
           curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/test_keyspace_metadata.py -o cqlshlib/test/test_keyspace_metadata.py
 
       - name: Run pytest on CQLSH tests
         run: |
-          # pytest apache_tests/cqlshlib/test
-          # cd apache_tests; pytest cqlshlib/test
           pwd
-          ls *
-          ls */*
-          #cd apache_tests/cqlshlib; pwd; pytest test
           pytest cqlshlib/test
 
