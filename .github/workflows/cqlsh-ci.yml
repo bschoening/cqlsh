@@ -70,6 +70,5 @@ jobs:
 
       - name: Run pytest on CQLSH tests
         run: |
-          cd apache_tests/cqlshlib
-          pytest test
+          pytest apache_tests/cqlshlib/test
 
