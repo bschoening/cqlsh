@@ -62,7 +62,6 @@ jobs:
       - name: Download Apache Cassandra CQLSH test files
         run: |
           mkdir -p apache_tests/cqlshlib/test
-          cd apache_tests/cqlshlib
           curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/__init__.py -o apache_tests/cqlshlib/test/__init__.py
           curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/test_cqlsh_output.py -o apache_tests/cqlshlib/test/test_cqlsh_output.py
           curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/test_cqlsh_parsing.py -o apache_tests/cqlshlib/test/test_cqlsh_parsing.py
@@ -71,5 +70,6 @@ jobs:
 
       - name: Run pytest on CQLSH tests
         run: |
+          cd apache_tests/cqlshlib
           pytest test
 
