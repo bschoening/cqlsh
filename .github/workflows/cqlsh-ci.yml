@@ -59,7 +59,6 @@ jobs:
           pip install -e ./cqlsh
           pip install pytest cassandra-driver
           pip install pywinpty
-          cp cqlsh/cqlshlib/run_cqlsh.py qlsh/cqlshlib/test/run_cqlsh.py
 
       - name: Download Apache Cassandra CQLSH test files
         run: |
@@ -75,6 +74,7 @@ jobs:
           curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/test_keyspace_init.cql -o cqlshlib/test/test_keyspace_init.cql
           curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/test_unicode.py -o cqlshlib/test/test_unicode.py
           curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/test_keyspace_metadata.py -o cqlshlib/test/test_keyspace_metadata.py
+          cp cqlsh/cqlshlib/run_cqlsh.py qlsh/cqlshlib/test/run_cqlsh.py
 
       - name: Run pytest on CQLSH tests
         run: |
