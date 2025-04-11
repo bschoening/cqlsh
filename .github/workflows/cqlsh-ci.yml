@@ -58,6 +58,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e ./cqlsh
           pip install pytest cassandra-driver
+          pip install pywinpty
+          cp cqlsh/cqlshlib/run_cqlsh.py qlsh/cqlshlib/test/run_cqlsh.py
 
       - name: Download Apache Cassandra CQLSH test files
         run: |
