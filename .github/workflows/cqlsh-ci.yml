@@ -74,7 +74,7 @@ jobs:
           curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/test_keyspace_init.cql -o cqlshlib/test/test_keyspace_init.cql
           curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/test_unicode.py -o cqlshlib/test/test_unicode.py
           curl -sL https://raw.githubusercontent.com/apache/cassandra/trunk/pylib/cqlshlib/test/test_keyspace_metadata.py -o cqlshlib/test/test_keyspace_metadata.py
-          cp cqlsh/cqlshlib/run_cqlsh.py qlsh/cqlshlib/test/run_cqlsh.py
+          cp cqlshlib/run_cqlsh.py cqlshlib/test/run_cqlsh.py
 
       - name: Run pytest on CQLSH tests
         run: |
